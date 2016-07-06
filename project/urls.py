@@ -1,10 +1,10 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth.models import User
-from welcome.views import index, health
-from rest_framework import routers, serializers, viewsets
+from welcome.views import index, health,UserViewSet,GroupViewSet
+from rest_framework import routers#, serializers, viewsets
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+'''class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ('url', 'username', 'email', 'is_staff')
@@ -17,8 +17,11 @@ class UserViewSet(viewsets.ModelViewSet):
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
+'''
 
-
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+router.register(r'groups', GroupViewSet)
 
 urlpatterns = [
     # Examples:
@@ -29,5 +32,5 @@ urlpatterns = [
     url(r'^health$', health),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^', include(router.urls), name='api_home'),
+    url(r'^', include(router.urls))
 ]
